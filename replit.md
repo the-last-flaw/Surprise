@@ -14,7 +14,7 @@ The application follows a monorepo structure with clear separation between clien
 
 - **Frontend**: React with TypeScript, built using Vite
 - **Backend**: Express.js with TypeScript
-- **Database**: PostgreSQL with Drizzle ORM (configured but using in-memory storage currently)
+- **Database**: PostgreSQL with Drizzle ORM (active database connection)
 - **AI Integration**: Google Gemini API for character-based responses
 - **UI Framework**: Tailwind CSS with shadcn/ui components
 - **Animation**: Framer Motion for smooth transitions and effects
@@ -30,9 +30,9 @@ The application follows a monorepo structure with clear separation between clien
 
 ### Backend Architecture
 - **Express.js Server**: RESTful API with middleware for logging and error handling
-- **Storage Layer**: Interface-based design supporting both in-memory and database storage
+- **Storage Layer**: PostgreSQL database with Drizzle ORM for persistent data storage
 - **AI Service**: Dedicated Gemini service for generating character-specific responses
-- **Session Management**: Chat sessions tracked by unique session IDs
+- **Session Management**: Chat sessions tracked by unique session IDs with database persistence
 
 ### Database Schema
 - **Users Table**: Basic user authentication structure (id, username, password)
@@ -98,5 +98,7 @@ The application follows a monorepo structure with clear separation between clien
 - ✓ Improved input field with character counter and validation
 - ✓ Enhanced chat interface with hover effects and message interactions
 - ✓ Updated design to clean white/gold aesthetic inspired by sliding-timer reference
+- ✓ Migrated from in-memory to PostgreSQL database with persistent storage
+- ✓ Set up Drizzle ORM with proper database schema and migrations
 
 The application is designed to be easily deployable to platforms like Replit, with automatic database provisioning and environment variable management.
