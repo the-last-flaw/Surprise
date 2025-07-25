@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import { MysticalOrb } from "@/components/ui/mystical-orb";
 import { ChatInterface } from "@/components/ui/chat-interface";
+import { ThemeToggle } from "@/components/ui/theme-toggle";
+import { EnhancedLoading } from "@/components/ui/enhanced-loading";
 
 const WHISPER_TEXTS = [
   "Patience is for the weak.",
@@ -36,8 +38,16 @@ export default function Home() {
     setInitialMessage("");
   };
 
+  const handleNewSession = () => {
+    setState("input");
+    setInputValue("");
+    setInitialMessage("");
+  };
+
   return (
-    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-white via-yellow-50/30 to-white">
+    <div className="min-h-screen relative overflow-hidden bg-gradient-to-br from-white via-yellow-50/30 to-white dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+      {/* Theme Toggle */}
+      <ThemeToggle />
       {/* Floating Particles */}
       <div className="floating-particles">
         {[...Array(6)].map((_, i) => (
@@ -76,13 +86,13 @@ export default function Home() {
           <div className="mb-4">
             <MysticalOrb size="md" className="mx-auto" />
           </div>
-          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 mb-3 tracking-tight">
+          <h1 className="text-5xl md:text-6xl font-bold text-gray-900 dark:text-white mb-3 tracking-tight">
             Refine{" "}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-500 to-yellow-600">
               Heaven
             </span>
           </h1>
-          <p className="text-gray-600 text-lg font-light tracking-wider">
+          <p className="text-gray-600 dark:text-gray-300 text-lg font-light tracking-wider">
             Forge Your Path. No Mercy. Just Progress.
           </p>
         </motion.header>
@@ -102,13 +112,13 @@ export default function Home() {
                 {/* Central Input Field */}
                 <div className="relative mb-8">
                   <div className="absolute inset-0 bg-gradient-to-r from-yellow-400/10 to-yellow-500/10 rounded-2xl blur-sm opacity-50" />
-                  <div className="relative bg-white/80 backdrop-blur-lg border border-yellow-400/20 rounded-2xl p-8 shadow-2xl">
+                  <div className="relative bg-white/80 dark:bg-gray-800/80 backdrop-blur-lg border border-yellow-400/20 dark:border-yellow-400/30 rounded-2xl p-8 shadow-2xl">
                     <Input
                       value={inputValue}
                       onChange={(e) => setInputValue(e.target.value)}
                       onKeyPress={handleSubmit}
                       placeholder="What do you seek to refine?"
-                      className="w-full bg-transparent text-gray-900 text-xl md:text-2xl font-light placeholder-gray-500 border-none focus:ring-0 focus:placeholder-transparent transition-all duration-300"
+                      className="w-full bg-transparent text-gray-900 dark:text-white text-xl md:text-2xl font-light placeholder-gray-500 dark:placeholder-gray-400 border-none focus:ring-0 focus:placeholder-transparent transition-all duration-300"
                       autoComplete="off"
                       autoFocus
                     />
@@ -124,7 +134,7 @@ export default function Home() {
                       initial={{ opacity: 0, y: 10 }}
                       animate={{ opacity: 1, y: 0 }}
                       transition={{ delay: 2 + index * 2, duration: 0.8 }}
-                      className="text-gray-500 font-light italic whisper-text"
+                      className="text-gray-500 dark:text-gray-400 font-light italic whisper-text"
                     >
                       "{text}"
                     </motion.div>
@@ -152,18 +162,8 @@ export default function Home() {
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.8 }}
                 transition={{ duration: 0.6 }}
-                className="text-center"
               >
-                <div className="mb-6">
-                  <MysticalOrb size="lg" isThinking className="mx-auto" />
-                </div>
-                <motion.p
-                  animate={{ opacity: [0.5, 1, 0.5] }}
-                  transition={{ duration: 2, repeat: Infinity }}
-                  className="text-yellow-400 font-light text-lg"
-                >
-                  Refining your essence...
-                </motion.p>
+                <EnhancedLoading />
               </motion.div>
             )}
 
@@ -179,6 +179,7 @@ export default function Home() {
                   sessionId={sessionId}
                   initialMessage={initialMessage}
                   onBack={handleBackToInput}
+                  onNewSession={handleNewSession}
                 />
               </motion.div>
             )}
