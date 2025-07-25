@@ -41,10 +41,14 @@ export async function generateFangYuanResponse(userMessage: string, conversation
         temperature: 0.8,
         maxOutputTokens: 300,
       },
-      contents: contextualPrompt,
+      contents: [{ role: "user", parts: [{ text: contextualPrompt }] }],
     });
+    
+    if (!response.text) {
+      return "Refinement requires clarity. Speak with purpose.";
+    }
 
-    return response.text || "Refinement requires clarity. Speak with purpose.";
+    return response.text;
   } catch (error) {
     console.error("Gemini API Error:", error);
     throw new Error("The heavens are silent. Try again, mortal.");
